@@ -144,7 +144,57 @@
                 </li> -->
             </ul>
         </div>
-    </div> 
+    </div>
+    <script>
+        const oFrom = document.querySelector('#from');
+        const oTo = document.querySelector('#to');
+        const oTrainDate = document.querySelector('#trainDate');
+        const oUl = document.querySelector('ul.flex');
+        const oSubmit = document.querySelector('.submit');
+        let from = '', to = '', trainDate = '';
+        var url = "http://route.showapi.com/909-1";//接口地址
+        // var url = "http://route.showapi.com/909-1?" +
+        //     "showapi_appid=98684&showapi_sign=c0bd22979a68454b9ae03bfb77d4125c" +
+        //     "&from=长沙&to=成都&trainDate=2019-06-26";
+            oSubmit.onclick = function () {
+                from = oFrom.value;
+                to = oTo.value;
+                trainDate = oTrainDate.value;
+                // console.log(from)
+                // console.log(to)
+                // console.log(trainDate)
+            }
 
+         Ajax({
+             type:'GET',
+             url:url,
+             async:true, //异步true
+             date:{
+                 showapi_appid:'98684',
+                 showapi_sign:"c0bd22979a68454b9ae03bfb77d4125c",
+                 from:"深圳",
+                 to:"上海",
+                 trainDate:"2019-06-26",
+             },
+             success:function () {
+                 
+             }
+         })
+         //写ajax
+        function Ajax(opt) {
+            var xhr = new XMLHttpRequest();
+            // xhr.open("GET",url,true);//开启数据信道
+            xhr.open(opt.type,opt.url,opt.async)
+            xhr.send();//发送数据
+            xhr.onreadystatechange = () =>{ //服务器确定数据
+                // console.log(xhr.readyState);//判断数据是否可使用,4为可用
+                // console.log(xhr.status);//服务器向客户端返回的状态码，200是成功的
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    console.log(xhr.responseText)
+                }
+            }
+        }
+
+    </script>
 </body>
 </html>
