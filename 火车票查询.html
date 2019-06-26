@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>火车票查询 - 朝歌老师</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{margin: 0;padding: 0;}
+        html,body{
+            overflow: hidden;
+            height: 100vh;
+        }
+        body{
+            background-color: #eeeeee;
+        }
+       .red{font-size:18px;color: #d20000;}
+        .flex{display: flex;}
+
+        .train-list p.big{
+            font-size:18px;
+            color:cornflowerblue;
+            font-weight: bold;
+        }
+        .column{
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .train-container{
+            width: 100vw;
+        }
+        .train-container .control{
+            width: 100vw;
+            height: 14vh;
+            padding:1vh 0;
+            background-color: #267bfbbd;
+        }
+        .control p.parameter{
+            display: flex;
+            justify-content: space-between;
+            font-size:18px;
+            color:#666;
+            width: 60%;
+        }
+        .control input{
+            width: 60%;
+            border-radius:8px;
+            border:1px solid #ddd;
+            outline:none;
+            text-indent:1em;
+        }
+        .control p.submit{
+            width: 60%;
+            height: 3vh;
+            line-height:3vh;
+            text-indent: 0;
+            color:#fff;
+            background-color:#698;
+            text-align: center;
+        }
+        .control p.submit:hover{
+            background-color: #ffaa62;
+        }
+
+        .train-list{
+            overflow-y: scroll;
+            width: 100vw;
+            height: 86vh;
+            background-color: #f7f7f7;
+        }
+        
+        .train-list ul{
+            flex-direction:column;
+            justify-content: flex-start;
+            align-self: center;
+        }
+        .train-list ul li{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 8vh;
+            margin-bottom:.5vh;
+            background-color: #fff;
+        }
+        .batch p{
+            font-size: 12px;
+            text-align:center;
+        }
+        .start .fromCity,.end .toCity{
+            font-size: 14px;
+        }
+        .end .toTime{
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .ticketInfo .price{
+            color: #FF0036;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .train-list .seats{
+            font-size: 12px;
+        }
+        .train-list .space{
+            margin-top: 4px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="train-container">
+        <div class="control  flex column">
+            <p class="parameter">
+                <span>起点</span>
+                <input type="text" id="from"></p>
+            <p class="parameter">
+                <span>终点</span>
+                <input type="text" id="to"></p>
+            <p class="parameter">
+                <span>出发时间</span>
+                <input type="text" id="trainDate"></p>
+            <p class="submit">点击查询</p>
+        </div>
+        <div class="train-list">
+            <ul class="flex">
+                <!-- <li>
+                    <div class="start">
+                        <p class="fromTime big">16:49</p>
+                        <p class="fromCity">北京</p>
+                        <p class="seats">二等座有票</p>
+                    </div>
+                    <div class="batch">
+                        <p class="usedTime">1时47分</p>
+                        <p class="num space">G169</p>
+                        <p class="seats space">一等座有票</p>
+                    </div>
+                    <div class="end">
+                        <p class="toTime">18:08</p>
+                        <p class="toCity">上海</p>
+                        <p class="seats">无座有票</p>
+                    </div>
+                    <div class="ticketInfo">
+                        <p class="price">¥135</p>
+                    </div>
+                </li> -->
+            </ul>
+        </div>
+    </div> 
+   
+</body>
+</html>
