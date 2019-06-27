@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>火车票查询 </title>
+    <title>火车票查询 - 朝歌老师</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         *{margin: 0;padding: 0;}
@@ -13,7 +13,7 @@
         body{
             background-color: #eeeeee;
         }
-       .red{font-size:18px;color: #d20000;}
+        .red{font-size:18px;color: #d20000;}
         .flex{display: flex;}
 
         .train-list p.big{
@@ -68,7 +68,7 @@
             height: 86vh;
             background-color: #f7f7f7;
         }
-        
+
         .train-list ul{
             flex-direction:column;
             justify-content: flex-start;
@@ -102,30 +102,102 @@
             font-size: 12px;
         }
         .train-list .space{
-            margin-top: 4px; 
+            margin-top: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="train-container">
-        <div class="control  flex column">
-            <p class="parameter">
-                <span>起点</span>
-                <input type="text" id="from"></p>
-            <p class="parameter">
-                <span>终点</span>
-                <input type="text" id="to"></p>
-            <p class="parameter">
-                <span>出发时间</span>
-                <input type="text" id="trainDate"></p>
-            <p class="submit">点击查询</p>
-        </div>
-        <div class="train-list">
-            <ul class="flex">
-                <!-- <li>
+<div class="train-container">
+    <div class="control  flex column">
+        <p class="parameter">
+            <span>起点</span>
+            <input type="text" id="from"></p>
+        <p class="parameter">
+            <span>终点</span>
+            <input type="text" id="to"></p>
+        <p class="parameter">
+            <span>出发时间</span>
+            <input type="text" id="trainDate"></p>
+        <p class="submit">点击查询</p>
+    </div>
+    <div class="train-list">
+        <ul class="flex">
+            <!-- <li>
+                <div class="start">
+                    <p class="fromTime big">16:49</p>
+                    <p class="fromCity">北京</p>
+                    <p class="seats">二等座有票</p>
+                </div>
+                <div class="batch">
+                    <p class="usedTime">1时47分</p>
+                    <p class="num space">G169</p>
+                    <p class="seats space">一等座有票</p>
+                </div>
+                <div class="end">
+                    <p class="toTime">18:08</p>
+                    <p class="toCity">上海</p>
+                    <p class="seats">无座有票</p>
+                </div>
+                <div class="ticketInfo">
+                    <p class="price">¥135</p>
+                </div>
+            </li> -->
+        </ul>
+    </div>
+</div>
+<script>
+    const oFrom = document.querySelector("#from")
+    const oTo = document.querySelector("#to")
+    const oTrainDate = document.querySelector("#trainDate")
+    const oUl = document.querySelector("ul.flex")
+    const oSubmit = document.querySelector(".submit")
+    let from = '',to = '',trainDate = ''
+    var url = 'http://route.showapi.com/909-1'//接口地址
+    //var url = 'http://route.showapi.com/909-1?showapi_appid=82719&showapi_sign=558f877c6ed848d79fc7eb498d7494af&from=长沙&to=成都&trainDate=2019-02-15'
+    oSubmit.onclick = function(){
+        from = oFrom.value
+        to = oTo.value
+        trainDate = oTrainDate.value
+        //console.log(from)
+        getTransInfo({
+            from:from,
+            to:to,
+            trainDate:trainDate
+        })
+    }
+
+    function getTransInfo(opt){
+        Ajax({
+            type:'GET',
+            url:url,
+            async:true,
+            data:{
+                showapi_appid:'82719',
+                showapi_sign:'558f877c6ed848d79fc7eb498d7494af',
+                from:opt.from,
+                to:opt.to,
+                trainDate:opt.trainDate
+            },
+            success: function(res){
+                //console.log(res)
+                var transInfo = JSON.parse(res).showapi_res_body.trains
+                //console.log(transInfo)
+                foramtting(transInfo)
+            }
+        })
+    }
+
+    //渲染函数
+    function foramtting(dataList){
+        //console.log(dataList)
+        var str = ''
+        dataList.forEach(function(item,index){
+            //console.log(item,index)
+            str += `
+                <li>
                     <div class="start">
-                        <p class="fromTime big">16:49</p>
-                        <p class="fromCity">北京</p>
+                        <p class="fromTime big">${item.fromTime}</p>
+                        <p class="fromCity">${item.fromCity}</p>
                         <p class="seats">二等座有票</p>
                     </div>
                     <div class="batch">
@@ -134,67 +206,41 @@
                         <p class="seats space">一等座有票</p>
                     </div>
                     <div class="end">
-                        <p class="toTime">18:08</p>
-                        <p class="toCity">上海</p>
+                        <p class="toTime">${item.toTime}</p>
+                        <p class="toCity">${item.toCity}</p>
                         <p class="seats">无座有票</p>
                     </div>
                     <div class="ticketInfo">
                         <p class="price">¥135</p>
                     </div>
-                </li> -->
-            </ul>
-        </div>
-    </div>
-    <script>
-        const oFrom = document.querySelector('#from');
-        const oTo = document.querySelector('#to');
-        const oTrainDate = document.querySelector('#trainDate');
-        const oUl = document.querySelector('ul.flex');
-        const oSubmit = document.querySelector('.submit');
-        let from = '', to = '', trainDate = '';
-        var url = "http://route.showapi.com/909-1";//接口地址
-        // var url = "http://route.showapi.com/909-1?" +
-        //     "showapi_appid=98684&showapi_sign=c0bd22979a68454b9ae03bfb77d4125c" +
-        //     "&from=长沙&to=成都&trainDate=2019-06-26";
-            oSubmit.onclick = function () {
-                from = oFrom.value;
-                to = oTo.value;
-                trainDate = oTrainDate.value;
-                // console.log(from)
-                // console.log(to)
-                // console.log(trainDate)
-            }
+                </li>
+                `
+        })
+        oUl.innerHTML = str
+    }
 
-         Ajax({
-             type:'GET',
-             url:url,
-             async:true, //异步true
-             date:{
-                 showapi_appid:'98684',
-                 showapi_sign:"c0bd22979a68454b9ae03bfb77d4125c",
-                 from:"深圳",
-                 to:"上海",
-                 trainDate:"2019-06-26",
-             },
-             success:function () {
-                 
-             }
-         })
-         //写ajax
-        function Ajax(opt) {
-            var xhr = new XMLHttpRequest();
-            // xhr.open("GET",url,true);//开启数据信道
-            xhr.open(opt.type,opt.url,opt.async)
-            xhr.send();//发送数据
-            xhr.onreadystatechange = () =>{ //服务器确定数据
-                // console.log(xhr.readyState);//判断数据是否可使用,4为可用
-                // console.log(xhr.status);//服务器向客户端返回的状态码，200是成功的
-                if(xhr.readyState === 4 && xhr.status === 200){
-                    console.log(xhr.responseText)
-                }
+    function Ajax(opt){
+        //console.log(opt)
+        var parames = []
+        var sendData = ''
+        for(var key in opt.data){
+            parames.push(`${key}=${opt.data[key]}`)
+        }
+        //console.log(parames)
+        sendData = parames.join("&")
+        //console.log(sendData)
+        var xhr = new XMLHttpRequest()
+        xhr.open(opt.type,opt.url+'?'+sendData,opt.async)//开启数据信道
+        xhr.send()//发送数据
+        xhr.onreadystatechange = ()=>{//服务器确定数据
+            //console.log(xhr.readyState)//判断数据是否可使用
+            //console.log(xhr.status)//服务器向客户端返回的状态码
+            if(xhr.readyState == 4 && xhr.status == 200){
+                //console.log(xhr.responseText)
+                opt.success(xhr.responseText)
             }
         }
-
-    </script>
+    }
+</script>
 </body>
 </html>
